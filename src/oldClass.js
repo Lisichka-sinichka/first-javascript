@@ -26,3 +26,31 @@ Object.defineProperty(User.prototype, 'age', {
 	get: User__getAge,
 	set: User__setAge
 });
+//  наследование нового класса
+function Employer(name, password, age, salary, position) {
+	User.call(this, name, password, age);
+	this.salary = salary
+	this.position = position
+}
+
+Employer.prototype = Object.create(User.prototype);
+
+Object.defineProperty(Employer.prototype, 'constructor', {
+	value: Employer,
+	enumerable: false, // false, чтобы данное свойство не появлялось в цикле for in
+	writable: true
+});
+
+Employer.prototype.isMature = function () {
+	return this.age >= 18 ? 'Совершеннолетний(яя)'
+						: 'Несовершеннолетний(яя)'
+}
+// пример
+let man = new Employer('Anton', 'qwerty', 35, 2500, 'manger')
+
+console.log(man.isMature());
+console.log(man.age);
+console.log(man.name);
+console.log(man.password);
+console.log(man.salary);
+console.log(man.position);
